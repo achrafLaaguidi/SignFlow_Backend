@@ -1,8 +1,8 @@
 package com.laaguidi.SignFlow.controller.central;
 
-import com.laaguidi.SignFlow.model.dto.request.TenantRequest;
+import com.laaguidi.SignFlow.model.central.dto.request.TenantRequest;
 import com.laaguidi.SignFlow.model.central.dto.request.TenantStatusRequest;
-import com.laaguidi.SignFlow.model.dto.response.TenantResponse;
+import com.laaguidi.SignFlow.model.central.dto.response.TenantResponse;
 import com.laaguidi.SignFlow.service.central.SuperAdminAuthService;
 import com.laaguidi.SignFlow.service.central.TenantProvisioningService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/central/tenants")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('SUPER_ADMIN')")
 public class CentralTenantController {
 
     private final TenantProvisioningService tenantProvisioningService;
@@ -69,6 +71,8 @@ public class CentralTenantController {
     ) {
         return ResponseEntity.ok(tenantProvisioningService.updateTenantStatus(tenantId, request));
     }
+
+
 
     @DeleteMapping("/{tenantId}")
     public ResponseEntity<Void> deleteTenant(@PathVariable UUID tenantId) {

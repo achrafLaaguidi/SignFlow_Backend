@@ -1,4 +1,4 @@
-package com.laaguidi.SignFlow.model.dto.response;
+package com.laaguidi.SignFlow.model.central.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TenantResponse {
-    private String tenantId;
+    private String id;
     private String companyName;
     private String adminEmail;
     private String status;

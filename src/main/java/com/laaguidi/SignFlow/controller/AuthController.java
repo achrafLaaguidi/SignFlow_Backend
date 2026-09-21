@@ -1,11 +1,10 @@
 package com.laaguidi.SignFlow.controller;
 
 
-import com.laaguidi.SignFlow.config.tenant.TenantContext;
 import com.laaguidi.SignFlow.model.dto.request.AuthRequest;
-import com.laaguidi.SignFlow.model.dto.request.RegisterRequest;
+import com.laaguidi.SignFlow.model.dto.request.CreateUserRequest;
 import com.laaguidi.SignFlow.model.dto.response.UserResponse;
-import com.laaguidi.SignFlow.service.AuthService;
+import com.laaguidi.SignFlow.service.impl.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -22,7 +21,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(
-            @Valid @RequestBody RegisterRequest request,
+            @Valid @RequestBody CreateUserRequest request,
             @RequestHeader("X-Tenant-ID") String tenantId
     ) {
         return ResponseEntity.ok(authService.register(request, tenantId));
@@ -36,6 +35,12 @@ public class AuthController {
     ) {
         return ResponseEntity.ok(authService.login(request, tenantId, response));
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getUser(){
+        return ResponseEntity.ok(authService.getUser());
+    }
+
 
     @PostMapping("/refresh")
     public ResponseEntity<Void> refreshToken(

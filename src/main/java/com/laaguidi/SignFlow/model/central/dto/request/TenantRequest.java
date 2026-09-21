@@ -1,4 +1,4 @@
-package com.laaguidi.SignFlow.model.dto.request;
+package com.laaguidi.SignFlow.model.central.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

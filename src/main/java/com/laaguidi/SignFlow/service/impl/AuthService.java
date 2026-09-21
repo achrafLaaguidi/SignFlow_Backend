@@ -1,8 +1,8 @@
-package com.laaguidi.SignFlow.service;
+package com.laaguidi.SignFlow.service.impl;
 
 import com.laaguidi.SignFlow.exception.TenantNotFoundException;
 import com.laaguidi.SignFlow.model.dto.request.AuthRequest;
-import com.laaguidi.SignFlow.model.dto.request.RegisterRequest;
+import com.laaguidi.SignFlow.model.dto.request.CreateUserRequest;
 import com.laaguidi.SignFlow.model.dto.response.UserResponse;
 import com.laaguidi.SignFlow.model.entity.Role;
 import com.laaguidi.SignFlow.model.entity.User;
@@ -14,13 +14,15 @@ import com.laaguidi.SignFlow.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +63,7 @@ public class AuthService {
         this.userDetailsService = userDetailsService;
     }
 
-    public UserResponse register(RegisterRequest request, String tenantId) {
+    public UserResponse register(CreateUserRequest request, String tenantId) {
         validateTenantId(tenantId);
 
         Role role = roleRepository.findById(request.getRoleId())
@@ -156,5 +158,22 @@ public class AuthService {
             }
         }
         return null;
+    }
+
+    private String getAuthenticatedAdminEmail() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
+            return auth.getName();
+        }
+        return "SYSTEM";
+    }
+
+    public UserResponse getUser() {
+        String email = getAuthenticatedAdminEmail();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("SuperAdmin not found with email: " + email));
+
+        return userMapper.toResponse(user);
     }
 }

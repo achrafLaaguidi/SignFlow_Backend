@@ -3,8 +3,8 @@ package com.laaguidi.SignFlow.service.central;
 import com.laaguidi.SignFlow.exception.TenantNotFoundException;
 import com.laaguidi.SignFlow.model.central.dto.request.TenantStatusRequest;
 import com.laaguidi.SignFlow.model.central.entity.Tenant;
-import com.laaguidi.SignFlow.model.dto.request.TenantRequest;
-import com.laaguidi.SignFlow.model.dto.response.TenantResponse;
+import com.laaguidi.SignFlow.model.central.dto.request.TenantRequest;
+import com.laaguidi.SignFlow.model.central.dto.response.TenantResponse;
 import com.laaguidi.SignFlow.model.enums.PermissionEnum;
 import com.laaguidi.SignFlow.model.enums.Status;
 import com.laaguidi.SignFlow.model.mapper.central.TenantMapper;
@@ -115,7 +115,6 @@ public class TenantProvisioningService {
                 .companyName(request.getCompanyName())
                 .dbSchema(schemaName)
                 .adminEmail(request.getAdminEmail())
-                .adminPassword(passwordEncoder.encode(request.getAdminPassword()))
                 .status(Status.ACTIVE)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -324,11 +323,11 @@ public class TenantProvisioningService {
 
                 try (PreparedStatement pstmtRole = connection.prepareStatement(insertRoleSql)) {
                     pstmtRole.setObject(1, adminRoleId);
-                    pstmtRole.setString(2, "TENANT_ADMIN");
+                    pstmtRole.setString(2, "CLIENT_ADMIN");
                     pstmtRole.addBatch();
 
                     pstmtRole.setObject(1, userRoleId);
-                    pstmtRole.setString(2, "USER");
+                    pstmtRole.setString(2, "CLIENT_USER");
                     pstmtRole.addBatch();
 
                     pstmtRole.executeBatch();

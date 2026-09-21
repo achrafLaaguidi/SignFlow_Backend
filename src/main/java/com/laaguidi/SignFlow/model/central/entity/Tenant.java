@@ -28,8 +28,6 @@ public class Tenant {
     @Column(nullable = false, name = "admin_email")
     private String adminEmail;
 
-    @Column(nullable = false,name = "admin_password")
-    private String adminPassword;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

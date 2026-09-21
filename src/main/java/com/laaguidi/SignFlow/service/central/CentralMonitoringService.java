@@ -3,7 +3,6 @@ package com.laaguidi.SignFlow.service.central;
 import com.laaguidi.SignFlow.model.central.entity.CentralAuditLog;
 import com.laaguidi.SignFlow.model.central.dto.response.AuditLogResponse;
 import com.laaguidi.SignFlow.model.central.dto.response.PlatformMetricsResponse;
-import com.laaguidi.SignFlow.model.dto.response.TenantResponse;
 import com.laaguidi.SignFlow.model.mapper.central.CentralAuditLogsMapper;
 import com.laaguidi.SignFlow.repository.central.CentralAuditLogRepository;
 import com.laaguidi.SignFlow.repository.central.SuperAdminRepository;

@@ -3,9 +3,9 @@ spring:
     name: SignFlow
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:signflow_db}?sslmode=${DB_SSL_MODE:disable}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:root}
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSL_MODE}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: ${DB_POOL_MAX_SIZE:10}
@@ -34,30 +34,30 @@ spring:
       include-message: always
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT}
 
 application:
   central:
     super-admin:
-      email: ${SUPER_ADMIN_EMAIL:achraflaaguidi9@gmail.com}
-      password: ${SUPER_ADMIN_PASSWORD:ADMIN}
-      name: ${SUPER_ADMIN_NAME:achraf laaguidi}
+      email: ${SUPER_ADMIN_EMAIL}
+      password: ${SUPER_ADMIN_PASSWORD}
+      name: ${SUPER_ADMIN_NAME}
   cors:
-    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://*.signflow.local:*}
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
   security:
     jwt:
-      secret-key: ${JWT_SECRET_KEY:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
-      expiration: ${JWT_EXPIRATION:900000}
-      cookie-domain: ${COOKIE_DOMAIN:signflow.local}
+      secret-key: ${JWT_SECRET_KEY}
+      expiration: ${JWT_EXPIRATION}
+      cookie-domain: ${COOKIE_DOMAIN}
       refresh-token:
-        expiration: ${JWT_REFRESH_EXPIRATION:604800000}
+        expiration: ${JWT_REFRESH_EXPIRATION}
 
 minio:
-  url: ${MINIO_URL:http://localhost:9000}
-  access-key: ${MINIO_ACCESS_KEY:minioadmin}
-  secret-key: ${MINIO_SECRET_KEY:minioadmin}
-  bucket-name: ${MINIO_BUCKET_NAME:signflow-documents}
-  connect-timeout: ${MINIO_CONNECT_TIMEOUT:10000}
-  write-timeout: ${MINIO_WRITE_TIMEOUT:30000}
-  read-timeout: ${MINIO_READ_TIMEOUT:30000}
-  use-ssl: ${MINIO_USE_SSL:false}
+  url: ${MINIO_URL}
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_SECRET_KEY}
+  bucket-name: ${MINIO_BUCKET_NAME}
+  connect-timeout: ${MINIO_CONNECT_TIMEOUT}
+  write-timeout: ${MINIO_WRITE_TIMEOUT}
+  read-timeout: ${MINIO_READ_TIMEOUT}
+  use-ssl: ${MINIO_USE_SSL}
